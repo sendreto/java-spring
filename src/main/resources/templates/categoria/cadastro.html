@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<div class="container" id="cadastro">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="card uper">
+				<div class="card-header">Adicionar Categoria</div>
+				<div class="card-body">
+
+					<form
+						th:action="${categoria.id == null} ? @{/categorias/salvar} : @{/categorias/editar}"
+						th:object="${categoria}" method="POST">
+
+						<div th:replace="fragments/validacao  :: validacao"></div>
+
+
+						<div class="form-group">
+							<label for="descricao">Descrição</label> <input type="text"
+								class="form-control" id="descricao" 
+								autofocus="autofocus" th:field="*{descricao}" />
+						</div>
+
+						<input type="hidden" id="id" th:field="*{id}" />
+						<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

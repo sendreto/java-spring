@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+
+		<div class="container" id="cadastro">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="card uper">
+				<div class="card-header">Adicionar Despesa</div>
+				<div class="card-body">
+
+					<form
+						th:action="${despesa.id == null} ? @{/despesas/salvar} : @{/despesas/editar}"
+						th:object="${despesa}" method="POST">
+							<div class="form-group">
+								<label for="descricao">Descrição</label> <input type="text"
+									class="form-control" id="descricao" 
+									autofocus="autofocus" th:field="*{descricao}"
+									th:classappend="${#fields.hasErrors('descricao')} ? 'is-invalid'" />
+								<div class="invalid-feedback">
+									<span th:errors="*{descricao}"></span>
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="valor">Valor</label> <input type="text"
+									class="form-control" id="valor" data-mask="#.##0,00"
+									data-mask-reverse="true" th:field="*{valor}"
+									th:classappend="${#fields.hasErrors('valor')} ? 'is-invalid'" />
+								<div class="invalid-feedback">
+									<span th:errors="*{valor}"></span>
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="dataEntrada">Data</label> <input
+									type="date" class="form-control" id="data"
+									th:field="*{data}"
+									th:classappend="${#fields.hasErrors('data')} ? 'is-invalid'" />
+								<div class="invalid-feedback">
+									<span th:errors="*{data}"></span>
+								</div>
+							</div>
+
+							<div class="form-group ">
+								<label for="categoria">Categoria</label> <select id="categoria"
+									class="form-control" th:field="*{categoria}"
+									th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid'">
+									<option value="">Selecione...</option>
+									<option th:each="c : ${categorias}" th:value="${c.id}"
+										th:text="${c.descricao}"></option>
+								</select>
+								<div class="invalid-feedback">
+									<span th:errors="*{categoria}"></span>
+								</div>
+							</div>
+
+
+						<input type="hidden" id="id" th:field="*{id}" />
+						<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
